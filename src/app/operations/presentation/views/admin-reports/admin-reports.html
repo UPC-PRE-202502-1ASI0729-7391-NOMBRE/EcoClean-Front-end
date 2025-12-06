@@ -1,4 +1,4 @@
-<h1>Reportes de Ciudadanos</h1>
+<h1>Reportes de Tachos</h1>
 
 <div *ngIf="loading" class="loading">Cargando reportes...</div>
 
@@ -7,17 +7,30 @@
 </div>
 
 <div class="card" *ngFor="let r of reports">
-  <h3>📍 Distrito: {{ r.district }}</h3>
+  <div class="card-header">
+    <h3>🗑 {{ r.smartBinName }}</h3>
+    <span class="district-badge">{{ r.district }}</span>
+  </div>
 
-  <p><strong>Mensaje:</strong> {{ r.message }}</p>
-  <p><strong>ID del tacho:</strong> {{ r.smartBinId }}</p>
-  <p><strong>ID del usuario:</strong> {{ r.reporterId }}</p>
+  <p class="reporter">
+    <strong>Reportado por:</strong> {{ r.reporterName }}
+  </p>
+
+  <p class="message">
+    "{{ r.message }}"
+  </p>
 
   <p class="date">{{ r.createdAt | date : 'medium' }}</p>
 
-  <div *ngIf="r.photoUrl">
+  <div *ngIf="r.photoUrl" class="photo-container">
     <img [src]="r.photoUrl" alt="Foto reporte" class="photo">
   </div>
 
-  <span class="status">{{ r.status }}</span>
+  <div class="actions">
+    <span class="status">{{ r.status }}</span>
+
+    <button class="dispatch-btn" (click)="dispatchTruck(r.district)">
+      REPORTE DE TACHO LLENO
+    </button>
+  </div>
 </div>

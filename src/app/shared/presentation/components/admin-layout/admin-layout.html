@@ -2,7 +2,6 @@
 
   <aside class="sidebar">
 
-    <!-- LOGO -->
     <div class="logo">
       <div class="logo-text">
         <span>EcoSmart</span>
@@ -10,26 +9,30 @@
       </div>
     </div>
 
-    <!-- MENÚ -->
     <nav class="menu">
       <a routerLink="/admin/solicitudes" routerLinkActive="active">📄 Solicitudes</a>
       <a routerLink="/admin/empleados" routerLinkActive="active">🧑‍💼 Empleados</a>
       <a routerLink="/admin/tachos" routerLinkActive="active">🗑 Tachos</a>
       <a routerLink="/admin/reportes" routerLinkActive="active">📢 Reportes</a>
+      <a routerLink="/admin/mensajes" routerLinkActive="active">💬 Chat Global</a>
       <a routerLink="/admin/tendencias" routerLinkActive="active">📊 Tendencias</a>
     </nav>
 
-    <!-- PERFIL -->
+    <a class="profile-btn">
+      🛡 Super Admin
+    </a>
+
+    <button class="logout" (click)="logout()">
+      ⏻ Cerrar sesión
+    </button>
+
     <div class="user-info-box">
       <div class="user-avatar">{{ getInitial() }}</div>
       <div class="user-data">
         <span class="name">{{ username }}</span>
-        <span class="role">{{ role }}</span>
+        <span class="role">Administrador General</span>
       </div>
     </div>
-
-    <!-- LOGOUT -->
-    <button class="logout" (click)="logout()">⏻ Cerrar sesión</button>
 
   </aside>
 

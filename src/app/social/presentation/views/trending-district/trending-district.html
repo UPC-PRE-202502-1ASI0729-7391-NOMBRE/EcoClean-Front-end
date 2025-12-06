@@ -101,14 +101,15 @@
             </button>
             <span>{{ post.likes }} likes</span>
             <span *ngIf="post.official" class="official-badge">
-              Anuncio oficial
-            </span>
+      Anuncio oficial
+    </span>
           </div>
 
           <div class="actions">
-            <!-- Por ahora cualquiera puede eliminar;
-                 luego podemos restringirlo al autor con info del backend -->
-            <button class="link-button danger" (click)="delete(post)">
+            <button
+              class="link-button danger"
+              *ngIf="post.authorId === currentUserId"
+              (click)="delete(post)">
               Eliminar
             </button>
           </div>

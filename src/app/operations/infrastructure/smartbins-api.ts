@@ -12,13 +12,12 @@ export interface SmartBin {
   status: string;
   district: string;
 }
-
 export interface BinReport {
   id: number;
   message: string;
   photoUrl: string | null;
-  smartBinId: number;
-  reporterId: number;
+  smartBinName: string;
+  reporterName: string;
   status: string;
   district: string;
   createdAt?: string;

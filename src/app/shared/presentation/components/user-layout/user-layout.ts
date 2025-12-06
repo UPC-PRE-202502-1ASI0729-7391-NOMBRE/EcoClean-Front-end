@@ -21,32 +21,39 @@ export class UserLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+
+    // Si no hay token, mandar al login
     if (!token) {
       this.router.navigate(['/sign-in']);
       return;
     }
 
+    // Cargar datos del almacenamiento local
     const storedName = localStorage.getItem('username');
     const storedRoles = localStorage.getItem('roles');
     const storedMunicipality = localStorage.getItem('municipality');
 
     if (storedName) this.username = storedName;
 
-    // Leer roles
-    if (storedRoles) {
-      this.roles = JSON.parse(storedRoles);
-    }
-
-    // Leer municipalidad del empleado
     if (storedMunicipality) {
       this.municipality = storedMunicipality;
     }
 
-    // Calcular el rol visible en la interfaz
+    // Parseo seguro de roles
+    if (storedRoles) {
+      try {
+        this.roles = JSON.parse(storedRoles);
+      } catch (e) {
+        console.error('Error al leer roles', e);
+        this.roles = [];
+      }
+    }
+
+    // Calcular qué mostrar en la etiqueta de rol
     this.displayedRole = this.resolveRole();
   }
 
-  /** Determina el rol visible basado en los roles reales */
+  /** Determina el rol visible en la barra lateral */
   resolveRole(): string {
     if (this.roles.includes('ROLE_ADMIN')) {
       return 'Administrador';
@@ -54,20 +61,16 @@ export class UserLayoutComponent implements OnInit {
 
     if (this.roles.includes('ROLE_EMPLOYEE')) {
       return this.municipality
-        ? `Empleado de ${this.municipality}`
-        : 'Empleado';
+        ? `Empleado - ${this.municipality}`
+        : 'Empleado Municipal';
     }
 
     return 'Ciudadano';
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('roles');
-    localStorage.removeItem('municipality');
-
+    // Borrar todo para evitar conflictos al cambiar de cuenta
+    localStorage.clear();
     this.router.navigate(['/sign-in']);
   }
 }

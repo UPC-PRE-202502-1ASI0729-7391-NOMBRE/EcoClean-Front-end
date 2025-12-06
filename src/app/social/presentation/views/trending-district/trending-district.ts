@@ -25,12 +25,17 @@ export class TrendingDistrictComponent implements OnInit {
   showNewPostForm = false;
   loading = false;
 
+  currentUserId = 0;
+
   constructor(
     private socialStore: SocialStore,
     private districtsApi: DistrictsApi
   ) {}
 
   ngOnInit(): void {
+    // 1. Obtener ID del usuario logueado
+    this.currentUserId = Number(localStorage.getItem('userId')) || 0;
+
     this.socialStore.posts$.subscribe(posts => (this.posts = posts));
     this.socialStore.loading$.subscribe(loading => (this.loading = loading));
 
@@ -67,7 +72,7 @@ export class TrendingDistrictComponent implements OnInit {
       content: this.newPostContent,
       district: this.newPostDistrict,
       imageUrl: this.newPostImageUrl || null,
-      authorId: Number(localStorage.getItem('userId'))
+      authorId: this.currentUserId
     };
 
     this.socialStore.createPost(command);

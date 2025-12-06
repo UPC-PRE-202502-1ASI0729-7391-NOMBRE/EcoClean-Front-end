@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ProfileApi } from '../../../infrastructure/profile-api';
 import { Profile } from '../../../domain/model/profile.entity';
 
-// 👇 Igual que Social
 import { DistrictsApi } from '../../../../shared/infrastructure/districts-api';
 
 @Component({
@@ -17,18 +16,15 @@ import { DistrictsApi } from '../../../../shared/infrastructure/districts-api';
 })
 export class UserProfileComponent implements OnInit {
 
-  profile!: Profile;
+  profile: any = {};
   loading = true;
   saving = false;
+  districts: string[] = [];
 
-  defaultPhoto = 'https://via.placeholder.com/300';
+  // Campo nuevo para contraseña
+  newPassword = '';
 
-  districts: string[] = [];   // ← ya no es fija, ahora viene del backend
-
-  constructor(
-    private profileApi: ProfileApi,
-    private districtsApi: DistrictsApi
-  ) {}
+  constructor(private profileApi: ProfileApi, private districtsApi: DistrictsApi) {}
 
   ngOnInit(): void {
     this.loadProfile();
@@ -40,37 +36,29 @@ export class UserProfileComponent implements OnInit {
       next: (data) => {
         this.profile = data;
         this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-        alert('Debes crear un perfil primero.');
       }
     });
   }
 
   loadDistricts() {
-    this.districtsApi.getAllDistricts().subscribe({
-      next: (list: string[]) => {
-        this.districts = list;
-      },
-      error: () => {
-        console.error('Error cargando distritos');
-      }
-    });
+    this.districtsApi.getAllDistricts().subscribe(list => this.districts = list);
   }
 
   saveProfile() {
     this.saving = true;
 
-    this.profileApi.updateProfile(this.profile).subscribe({
-      next: updated => {
-        this.profile = updated;
+    // Incluir password si el usuario escribió algo
+    const updateData = { ...this.profile, password: this.newPassword || null };
+
+    this.profileApi.updateProfile(updateData).subscribe({
+      next: () => {
+        alert('Perfil actualizado correctamente.');
+        this.newPassword = ''; // Limpiar campo
         this.saving = false;
-        alert('Perfil actualizado.');
       },
       error: () => {
+        alert('Error al actualizar.');
         this.saving = false;
-        alert('Error al actualizar el perfil.');
       }
     });
   }

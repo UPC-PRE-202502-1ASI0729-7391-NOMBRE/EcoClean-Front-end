@@ -25,13 +25,12 @@ export class JobApi {
     return this.http.get<JobApplication[]>(`${this.baseUrl}`);
   }
 
-  // Actualizar estado de solicitud
   updateStatus(id: number, status: string) {
     return this.http.put(`${this.baseUrl}/${id}/status`, { status });
   }
-
   getEmployees(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/iam/employees`);
+    // Apuntar al nuevo endpoint en RecruitmentController
+    return this.http.get<any[]>(`${this.baseUrl}/employees`);
   }
 
   fireEmployee(userId: number) {

@@ -4,33 +4,32 @@
 </div>
 
 <div class="map-container">
-
   <div id="map" class="map-box"></div>
 
-  <button class="dispatch-btn" (click)="dispatchTruck()">
+  <button class="dispatch-btn" (click)="openDispatchModal()">
     🚛 Despachar camión al distrito
   </button>
 
   <h3 class="reports-title">Reportes ciudadanos</h3>
-
-  <div *ngIf="loadingReports" class="loading-box">
-    Cargando reportes...
-  </div>
-
-  <div *ngIf="!loadingReports && reports.length === 0" class="empty-box">
-    No hay reportes en tu distrito.
-  </div>
-
+  <div *ngIf="loadingReports" class="loading-box">Cargando reportes...</div>
+  <div *ngIf="!loadingReports && reports.length === 0" class="empty-box">No hay reportes.</div>
   <div class="report-card" *ngFor="let r of reports">
-    <div class="left">
-      <div class="avatar">{{ r.smartBinName.charAt(0) }}</div>
-
-      <div class="info">
-        <h4>{{ r.smartBinName }}</h4>
-        <p>{{ r.message }}</p>
-        <p class="date">📅 {{ r.createdAt | date:'medium' }}</p>
-      </div>
+    <div class="info">
+      <h4>{{ r.smartBinName }}</h4>
+      <p>{{ r.message }}</p>
     </div>
   </div>
+</div>
 
+<div class="modal-backdrop" *ngIf="showConfirmModal">
+  <div class="modal-card">
+    <div class="modal-icon">🚛</div>
+    <h3>Confirmar Despacho</h3>
+    <p>¿Estás seguro de enviar una unidad de recolección a <b>{{ employeeDistrict }}</b>?</p>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cancelDispatch()">Cancelar</button>
+      <button class="btn-confirm" (click)="confirmDispatch()">Confirmar Envío</button>
+    </div>
+  </div>
 </div>

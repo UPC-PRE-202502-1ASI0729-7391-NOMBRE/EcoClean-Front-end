@@ -18,6 +18,8 @@ export class UserChatView implements OnInit {
   messages: Message[] = [];
   newMessage = '';
 
+  currentUserId!: number;
+
   constructor(
     private route: ActivatedRoute,
     private communicationApi: CommunicationApi
@@ -25,13 +27,18 @@ export class UserChatView implements OnInit {
 
   ngOnInit(): void {
     this.municipalityCode = this.route.snapshot.paramMap.get('municipality') ?? '';
+    // 1. Obtener ID del localStorage
+    this.currentUserId = Number(localStorage.getItem('userId')) || 0;
     this.loadMessages();
   }
 
   loadMessages() {
     this.communicationApi.getMessagesByMunicipality(this.municipalityCode).subscribe({
       next: (msgs) => {
-        this.messages = msgs;
+        this.messages = msgs.filter(m =>
+          (m.senderId === this.currentUserId && !m.isOfficial) ||
+          (m.isOfficial)
+        );
       }
     });
   }

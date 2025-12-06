@@ -8,8 +8,8 @@
       <label for="municipality">Municipalidad</label>
       <select id="municipality" [(ngModel)]="selectedMunicipality" name="municipality" required>
         <option value="" disabled selected>Selecciona una municipalidad</option>
-        <option *ngFor="let m of municipalities" [value]="m.code">
-          {{ m.municipalityName }}
+        <option *ngFor="let m of municipalities" [value]="m">
+          Municipalidad de {{ m }}
         </option>
       </select>
     </div>

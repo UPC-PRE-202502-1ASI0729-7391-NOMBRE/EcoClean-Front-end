@@ -1,17 +1,25 @@
 <div class="header">
-  <h2>Mensajes Recibidos - {{ municipality }}</h2>
+  <h2 *ngIf="!isAdmin">Mensajes - {{ municipality }}</h2>
+  <h2 *ngIf="isAdmin">Panel de Mensajería Global</h2>
+</div>
+
+<div class="admin-selector" *ngIf="isAdmin">
+  <label>Seleccionar Municipalidad a revisar:</label>
+  <select [(ngModel)]="selectedDistrictForAdmin" (change)="onAdminDistrictChange()">
+    <option value="" disabled selected>Seleccione...</option>
+    <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+  </select>
 </div>
 
 <div *ngIf="loading" class="loading">Cargando...</div>
 
 <div *ngIf="!loading && chats.length === 0" class="empty">
-  No hay mensajes en tu municipalidad.
+  No hay mensajes pendientes.
 </div>
 
 <div class="chat-card" *ngFor="let c of chats" (click)="openChat(c.senderId)">
-  <div class="icon">{{ c.senderId }}</div>
+  <div class="icon">{{ c.email.charAt(0).toUpperCase() }}</div>
   <div class="info">
-    <h4>Ciudadano {{ c.senderId }}</h4>
-    <p>{{ c.messages[c.messages.length - 1].content }}</p>
+    <h4>{{ c.email }}</h4> <p class="preview">{{ c.messages[c.messages.length - 1].content }}</p>
   </div>
 </div>

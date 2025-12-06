@@ -1,13 +1,34 @@
-<h2>Chat con Ciudadano {{ userId }}</h2>
-
-<div class="chat-box">
-  <div *ngFor="let m of messages" [ngClass]="m.employeeId ? 'msg-employee' : 'msg-user'">
-    <p>{{ m.content }}</p>
-    <small>{{ m.createdAt | date:'short' }}</small>
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="circle-logo">{{ getInitial() }}</div>
+    <div>
+      <h2>{{ userEmail }}</h2>
+      <small>En: {{ municipality }}</small>
+    </div>
   </div>
-</div>
 
-<div class="input-box">
-  <input [(ngModel)]="newMessage" placeholder="Escribe una respuesta..." />
-  <button (click)="sendReply()">Responder</button>
+  <div class="chat-messages">
+    <div *ngFor="let m of messages">
+
+      <div class="row left" *ngIf="!m.isOfficial">
+        <div class="bubble theirs">
+          {{ m.content }}
+          <span class="time">{{ m.createdAt | date:'shortTime' }}</span>
+        </div>
+      </div>
+
+      <div class="row right" *ngIf="m.isOfficial">
+        <div class="bubble mine">
+          {{ m.content }}
+          <span class="time">{{ m.createdAt | date:'shortTime' }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" placeholder="Escribe una respuesta..." [(ngModel)]="newMessage" (keyup.enter)="sendReply()" />
+    <button (click)="sendReply()">➤</button>
+  </div>
 </div>

@@ -17,16 +17,28 @@ export class AdminReportsView implements OnInit {
   constructor(private smartBinsApi: SmartBinsApi) {}
 
   ngOnInit() {
+    this.loadReports();
+  }
+
+  loadReports() {
     this.smartBinsApi.getAllReports().subscribe({
       next: (data) => {
-        console.log("Reportes recibidos:", data);
         this.reports = data;
         this.loading = false;
       },
-      error: (err) => {
-        console.error("Error cargando reportes", err);
-        this.loading = false;
-      }
+      error: () => this.loading = false
+    });
+  }
+
+  // NUEVA FUNCIÓN
+  dispatchTruck(district: string) {
+    if(!confirm(`¿Enviar camión a ${district}?`)) return;
+
+    this.smartBinsApi.dispatchTruck(district).subscribe({
+      next: (res: any) => {
+        alert(res.message);
+      },
+      error: () => alert("Error al despachar unidad.")
     });
   }
 }

@@ -11,12 +11,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class NewConversationModal {
 
-  @Input() municipalities: {
-    code: string;
-    municipalityName: string;
-    district: string;
-    avatarUrl: string;
-  }[] = [];
+  @Input() municipalities: string[] = [];
+
   @Output() send = new EventEmitter<{ municipality: string; message: string }>();
   @Output() close = new EventEmitter<void>();
 

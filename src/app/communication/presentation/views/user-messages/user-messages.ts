@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { CommunicationApi } from '../../../infrastructure/communication-api';
 import { Message } from '../../../domain/model/message.entity';
 import { NewConversationModal } from '../../components/new-conversation/new-conversation';
-import { Router } from '@angular/router';
+import { DistrictsApi } from '../../../../shared/infrastructure/districts-api';
 
 interface ConversationPreview {
   municipalityCode: string;
   municipalityName: string;
   district: string;
-  avatarUrl: string;
   lastMessage: string;
   lastMessageDate: string;
 }
@@ -26,67 +26,73 @@ export class UserMessagesView implements OnInit {
   loading = true;
   conversations: ConversationPreview[] = [];
   showModal = false;
+  districtsList: string[] = [];
 
-  municipalitiesConfig = [
-    {
-      code: 'San Borja',
-      municipalityName: 'Municipalidad de San Borja',
-      district: 'San Borja',
-      avatarUrl: 'https://i.pravatar.cc/150?img=47'
-    },
-    {
-      code: 'Surco',
-      municipalityName: 'Municipalidad de Surco',
-      district: 'Surco',
-      avatarUrl: 'https://i.pravatar.cc/150?img=42'
-    },
-    {
-      code: 'San Miguel',
-      municipalityName: 'Municipalidad de San Miguel',
-      district: 'San Miguel',
-      avatarUrl: 'https://i.pravatar.cc/150?img=12'
-    },
-    {
-      code: 'Lima',
-      municipalityName: 'Municipalidad de Lima',
-      district: 'Lima',
-      avatarUrl: 'https://i.pravatar.cc/150?img=5'
-    }
-  ];
+  currentUserId!: number;
 
   constructor(
     private communicationApi: CommunicationApi,
-    private router: Router   // ← AGREGADO
+    private districtsApi: DistrictsApi,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadConversations();
+    // 1. Obtener ID del usuario actual
+    this.currentUserId = Number(localStorage.getItem('userId')) || 0;
+    this.loadDistrictsAndConversations();
   }
 
-  private loadConversations() {
-    this.conversations = [];
+  private loadDistrictsAndConversations() {
     this.loading = true;
 
-    let pending = this.municipalitiesConfig.length;
+    this.districtsApi.getAllDistricts().subscribe({
+      next: (districts) => {
+        this.districtsList = districts;
+        this.checkConversations(districts);
+      },
+      error: () => {
+        this.loading = false;
+        console.error("Error cargando distritos");
+      }
+    });
+  }
 
-    this.municipalitiesConfig.forEach(config => {
-      this.communicationApi.getMessagesByMunicipality(config.code).subscribe({
+  private checkConversations(districts: string[]) {
+    this.conversations = [];
+    let pending = districts.length;
+
+    if (pending === 0) {
+      this.loading = false;
+      return;
+    }
+
+    districts.forEach(district => {
+      this.communicationApi.getMessagesByMunicipality(district).subscribe({
         next: (messages: Message[]) => {
-          if (messages.length > 0) {
-            const last = messages[messages.length - 1];
+
+          const myMessages = messages.filter(m => m.senderId === this.currentUserId && !m.isOfficial);
+
+          if (myMessages.length > 0) {
+            const last = myMessages[myMessages.length - 1];
 
             this.conversations.push({
-              municipalityCode: config.code,
-              municipalityName: config.municipalityName,
-              district: config.district,
-              avatarUrl: config.avatarUrl,
+              municipalityCode: district,
+              municipalityName: `Municipalidad de ${district}`,
+              district: district,
               lastMessage: last.content,
               lastMessageDate: last.createdAt ?? ''
             });
           }
         },
         complete: () => {
-          if (--pending === 0) this.loading = false;
+          pending--;
+          if (pending === 0) {
+            this.loading = false;
+            // Ordenar por fecha
+            this.conversations.sort((a, b) =>
+              new Date(b.lastMessageDate).getTime() - new Date(a.lastMessageDate).getTime()
+            );
+          }
         }
       });
     });
@@ -104,12 +110,12 @@ export class UserMessagesView implements OnInit {
     this.communicationApi.sendMessage(event.municipality, event.message).subscribe({
       next: () => {
         this.showModal = false;
-        this.loadConversations();
+        this.loadDistrictsAndConversations();
       }
     });
   }
+
   openChat(c: ConversationPreview) {
     this.router.navigate(['/user/chat', c.municipalityCode]);
   }
-
 }

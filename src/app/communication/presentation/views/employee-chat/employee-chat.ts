@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import { FormsModule } from '@angular/forms';
+import { Message } from '../../../domain/model/message.entity';
 
 @Component({
   selector: 'app-employee-chat',
@@ -16,23 +17,34 @@ export class EmployeeChatView implements OnInit {
 
   userId!: number;
   municipality = '';
-  messages: any[] = [];
+  messages: Message[] = [];
   newMessage = '';
+  userEmail = '';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
-    this.municipality = localStorage.getItem('municipality') ?? '';
 
-    this.loadMessages();
+    this.route.queryParams.subscribe(params => {
+      this.municipality = params['municipality'] || localStorage.getItem('municipality') || '';
+      this.loadMessages();
+    });
   }
 
   loadMessages() {
-    this.http.get<any[]>(`${environment.apiUrl}/communication/messages/${this.municipality}`)
+    if (!this.municipality) return;
+
+    this.http.get<Message[]>(`${environment.apiUrl}/communication/messages/${this.municipality}`)
       .subscribe({
-        next: msgs => {
-          this.messages = msgs.filter(m => m.senderId == this.userId || m.employeeId);
+        next: (msgs) => {
+          this.messages = msgs.filter(m =>
+            (m.senderId === this.userId && !m.isOfficial) ||
+            (m.isOfficial)
+          );
+
+          const userMsg = this.messages.find(m => !m.isOfficial);
+          if (userMsg) this.userEmail = userMsg.senderEmail;
         }
       });
   }
@@ -40,14 +52,22 @@ export class EmployeeChatView implements OnInit {
   sendReply() {
     if (!this.newMessage.trim()) return;
 
-    const payload = { content: this.newMessage };
+    const payload = {
+      content: this.newMessage,
+      targetMunicipality: this.municipality
+    };
 
     this.http.post(`${environment.apiUrl}/communication/messages/reply`, payload)
       .subscribe({
         next: () => {
           this.newMessage = '';
           this.loadMessages();
-        }
+        },
+        error: (err) => console.error("Error enviando", err)
       });
+  }
+
+  getInitial(): string {
+    return this.userEmail ? this.userEmail.charAt(0).toUpperCase() : 'U';
   }
 }

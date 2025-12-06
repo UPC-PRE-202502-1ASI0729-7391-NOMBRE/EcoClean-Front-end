@@ -1,8 +1,9 @@
 export interface Message {
   id: number;
   content: string;
+  sender: string;
   senderId: number;
-  targetMunicipality: string;
-  isResponse: boolean;
-  createdAt?: string; // si en el recurso viene fecha de creación
+  senderEmail: string;
+  isOfficial: boolean;
+  createdAt: string;
 }

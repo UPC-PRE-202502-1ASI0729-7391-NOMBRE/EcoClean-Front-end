@@ -6,5 +6,6 @@ export interface Post {
   likes: number;
   official: boolean;
   authorName: string;
-  createdAt: string; // ISO date
+  authorId: number;
+  createdAt: string;
 }

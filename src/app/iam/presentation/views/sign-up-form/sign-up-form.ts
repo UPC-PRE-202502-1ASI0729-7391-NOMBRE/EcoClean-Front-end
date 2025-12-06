@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; // Asegúrate de importar RouterModule si usas routerLink en el HTML
 import { IamApi } from '../../../infrastructure/iam-api';
 import { DistrictsApi } from '../../../../shared/infrastructure/districts-api';
 
@@ -10,14 +10,14 @@ import { DistrictsApi } from '../../../../shared/infrastructure/districts-api';
   standalone: true,
   templateUrl: './sign-up-form.html',
   styleUrls: ['./sign-up-form.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class SignUpForm implements OnInit {
 
   // Datos del registro
   firstName = '';
   lastName = '';
-  username = '';
+  // username = '';
   email = '';
   password = '';
   confirmPassword = '';
@@ -40,10 +40,8 @@ export class SignUpForm implements OnInit {
   }
 
   createAccount() {
-
-    if (!this.firstName || !this.lastName || !this.username || !this.email ||
+    if (!this.firstName || !this.lastName || !this.email ||
       !this.password || !this.confirmPassword || !this.district) {
-
       this.errorMessage = 'Completa todos los campos.';
       return;
     }
@@ -53,22 +51,22 @@ export class SignUpForm implements OnInit {
       return;
     }
 
+    // 2. Enviamos los datos
     this.api.signUp({
-      username: this.username,
+      username: this.email,
       email: this.email,
       password: this.password,
       firstName: this.firstName,
       lastName: this.lastName,
-      district: this.district,
-      roles: ["ROLE_USER"]
+      district: this.district
     }).subscribe({
       next: () => {
         this.router.navigate(['/sign-up-success']);
       },
-      error: () => {
-        this.errorMessage = 'No se pudo crear la cuenta.';
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'No se pudo crear la cuenta. Intenta con otro correo.';
       }
     });
-
   }
 }

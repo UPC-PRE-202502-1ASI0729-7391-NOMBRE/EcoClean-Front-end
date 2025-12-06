@@ -1,58 +1,55 @@
 <div class="profile-header">
-  <h1>Tu perfil</h1>
-  <p>Administra tu información personal y mantén tus datos actualizados.</p>
+  <h1>Mi Perfil</h1>
+  <p *ngIf="profile.workingMunicipality" class="employee-badge">
+    👷‍♂️ Empleado de {{ profile.workingMunicipality }}
+  </p>
+  <p *ngIf="!profile.workingMunicipality">Ciudadano</p>
 </div>
 
 <div class="profile-container" *ngIf="!loading">
 
   <div class="photo-section">
-    <img [src]="profile.photoUrl || defaultPhoto" class="profile-photo"/>
-
-    <button class="upload-btn" (click)="triggerImageUpload()">
-      Cambiar foto
-    </button>
-
-    <input
-      id="photoInput"
-      type="file"
-      accept="image/*"
-      hidden
-      (change)="onImageSelected($event)"
-    />
+    <img [src]="profile.photoUrl || 'https://via.placeholder.com/150'" class="profile-photo"/>
   </div>
 
-  <div class="form-row">
+  <h3>Datos Personales</h3>
+  <div class="form-grid">
     <div class="field">
       <label>Nombre</label>
-      <input type="text" [(ngModel)]="profile.firstName" placeholder="Tu nombre">
+      <input type="text" [(ngModel)]="profile.firstName">
     </div>
-
     <div class="field">
       <label>Apellido</label>
-      <input type="text" [(ngModel)]="profile.lastName" placeholder="Tu apellido">
+      <input type="text" [(ngModel)]="profile.lastName">
     </div>
-  </div>
-
-  <div class="form-row">
     <div class="field">
-      <label>E-mail</label>
-      <input type="email" [(ngModel)]="profile.email" placeholder="ejemplo@gmail.com">
+      <label>Correo Electrónico</label>
+      <input type="email" [(ngModel)]="profile.email">
     </div>
-
     <div class="field">
-      <label>Distrito</label>
+      <label>Distrito de Residencia</label>
       <select [(ngModel)]="profile.district">
         <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
       </select>
     </div>
   </div>
 
+  <div *ngIf="profile.workingMunicipality" class="work-section">
+    <h3>Datos Laborales</h3>
+    <div class="field">
+      <label>Municipalidad donde trabaja</label>
+      <input type="text" [value]="profile.workingMunicipality" disabled class="disabled-input">
+      <small>Este dato solo puede ser modificado por el administrador.</small>
+    </div>
+  </div>
+
+  <h3>Seguridad</h3>
+  <div class="field">
+    <label>Nueva Contraseña (Opcional)</label>
+    <input type="password" [(ngModel)]="newPassword" placeholder="Dejar en blanco para mantener la actual">
+  </div>
+
   <button class="save-btn" (click)="saveProfile()" [disabled]="saving">
-    {{ saving ? 'Guardando...' : 'Guardar cambios' }}
+    Guardar Cambios
   </button>
-
-</div>
-
-<div *ngIf="loading" class="loading-box">
-  Cargando perfil...
 </div>

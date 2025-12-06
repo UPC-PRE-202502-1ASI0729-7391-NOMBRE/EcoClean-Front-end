@@ -1,36 +1,31 @@
 <div class="chat-container">
-
-  <!-- Encabezado -->
   <div class="chat-header">
-    <div class="circle-logo">
-      {{ getInitial() }}
-    </div>
+    <div class="circle-logo">{{ getInitial() }}</div>
     <h2>Municipalidad de {{ municipalityCode }}</h2>
   </div>
 
-  <!-- Lista de mensajes -->
   <div class="chat-messages">
-
     <div *ngFor="let m of messages">
-      <div class="bubble user" *ngIf="!m.isResponse">
-        {{ m.content }}
+
+      <div class="row left" *ngIf="m.isOfficial">
+        <div class="bubble theirs">
+          {{ m.content }}
+          <span class="time">{{ m.createdAt | date:'shortTime' }}</span>
+        </div>
       </div>
 
-      <div class="bubble muni" *ngIf="m.isResponse">
-        {{ m.content }}
+      <div class="row right" *ngIf="!m.isOfficial">
+        <div class="bubble mine">
+          {{ m.content }}
+          <span class="time">{{ m.createdAt | date:'shortTime' }}</span>
+        </div>
       </div>
+
     </div>
-
   </div>
 
-  <!-- Caja para escribir -->
   <div class="chat-input">
-    <input type="text"
-           placeholder="Escribe un mensaje..."
-           [(ngModel)]="newMessage"
-           (keyup.enter)="sendMessage()" />
-
-    <button (click)="sendMessage()">Enviar</button>
+    <input type="text" placeholder="Escribe un mensaje..." [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+    <button (click)="sendMessage()">➤</button>
   </div>
-
 </div>

@@ -50,7 +50,6 @@
 
 <new-conversation-modal
   *ngIf="showModal"
-  [municipalities]="municipalitiesConfig"
-  (send)="handleSendConversation($event)"
+  [municipalities]="districtsList"  (send)="handleSendConversation($event)"
   (close)="closeModal()">
 </new-conversation-modal>
