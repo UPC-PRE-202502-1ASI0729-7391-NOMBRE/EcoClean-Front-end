@@ -1,0 +1,13 @@
+<h2>Chat con Ciudadano {{ userId }}</h2>
+
+<div class="chat-box">
+  <div *ngFor="let m of messages" [ngClass]="m.employeeId ? 'msg-employee' : 'msg-user'">
+    <p>{{ m.content }}</p>
+    <small>{{ m.createdAt | date:'short' }}</small>
+  </div>
+</div>
+
+<div class="input-box">
+  <input [(ngModel)]="newMessage" placeholder="Escribe una respuesta..." />
+  <button (click)="sendReply()">Responder</button>
+</div>

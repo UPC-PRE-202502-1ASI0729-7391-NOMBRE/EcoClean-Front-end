@@ -1,0 +1,12 @@
+@import '../user-layout/user-layout.css';
+/* Reutilizamos el mismo estilo del usuario.
+   Si quieres diferencias visuales para empleado,
+   puedes sobreescribir aquí, por ejemplo: */
+
+.sidebar {
+  background: #1e6a27; /* un poco más oscuro para empleado */
+}
+
+.profile-btn {
+  background: rgba(255, 255, 255, 0.12);
+}

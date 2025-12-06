@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Mapa del distrito</h1>
+  <p>Explora los puntos de reciclaje y reporta tachos llenos en tu zona.</p>
+</div>
+
+<div class="map-container">
+
+  <div id="map" class="map-box"></div>
+
+  <div class="report-box">
+    <h2 class="report-title">Reportar tacho</h2>
+    <p class="report-hint">
+      Selecciona un tacho en el mapa y completa los datos para enviar tu reporte.
+    </p>
+
+    <div class="report-fields">
+
+      <div class="field">
+        <label>Distrito</label>
+        <select [(ngModel)]="selectedDistrict" [disabled]="!selectedBin">
+          <option value="">Seleccione distrito</option>
+          <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Comentario</label>
+        <input
+          type="text"
+          placeholder="Describe el problema..."
+          [(ngModel)]="comment"
+          [disabled]="!selectedBin"
+        />
+      </div>
+
+    </div>
+
+    <button
+      class="send-btn"
+      (click)="sendReport()"
+      [disabled]="!canSendReport()"
+    >
+      {{ sending ? 'Enviando...' : 'Enviar reporte' }}
+    </button>
+  </div>
+</div>

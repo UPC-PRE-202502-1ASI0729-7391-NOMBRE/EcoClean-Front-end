@@ -1,0 +1,10 @@
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 5px solid #1565c0;
+}
+.loading {
+  font-weight: bold;
+}

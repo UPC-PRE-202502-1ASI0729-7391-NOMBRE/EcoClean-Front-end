@@ -1,0 +1,17 @@
+<div class="header">
+  <h2>Mensajes Recibidos - {{ municipality }}</h2>
+</div>
+
+<div *ngIf="loading" class="loading">Cargando...</div>
+
+<div *ngIf="!loading && chats.length === 0" class="empty">
+  No hay mensajes en tu municipalidad.
+</div>
+
+<div class="chat-card" *ngFor="let c of chats" (click)="openChat(c.senderId)">
+  <div class="icon">{{ c.senderId }}</div>
+  <div class="info">
+    <h4>Ciudadano {{ c.senderId }}</h4>
+    <p>{{ c.messages[c.messages.length - 1].content }}</p>
+  </div>
+</div>

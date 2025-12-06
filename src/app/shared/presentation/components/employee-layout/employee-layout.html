@@ -1,0 +1,46 @@
+<div class="layout">
+  <aside class="sidebar">
+
+    <div class="logo">
+      <div class="logo-text">
+        <span>EcoSmart</span>
+        <small>Panel Empleado</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/employee/tendencias" routerLinkActive="active">
+        📢 Tendencias oficiales
+      </a>
+      <a routerLink="/employee/mapa" routerLinkActive="active">
+        🗺️ Reportes de tachos
+      </a>
+      <a routerLink="/employee/mensajes" routerLinkActive="active">
+        💬 Mensajes de vecinos
+      </a>
+    </nav>
+
+    <a routerLink="/employee/perfil" routerLinkActive="active" class="profile-btn">
+      👤 Perfil
+    </a>
+
+    <button class="logout" (click)="logout()">
+      ⏻ Cerrar sesión
+    </button>
+
+    <div class="user-info-box">
+      <div class="user-avatar">
+        {{ getInitial() }}
+      </div>
+      <div class="user-data">
+        <span class="name">{{ username }}</span>
+        <span class="role">Empleado - {{ municipality }}</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

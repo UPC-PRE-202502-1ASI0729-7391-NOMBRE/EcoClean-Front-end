@@ -1,0 +1,17 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DistrictsApi {
+  private readonly baseUrl = `${environment.apiUrl}/api/v1/shared/districts`;
+
+  constructor(private http: HttpClient) {}
+
+  getAllDistricts(): Observable<string[]> {
+    return this.http.get<string[]>(this.baseUrl);
+  }
+}

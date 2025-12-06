@@ -1,0 +1,28 @@
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border-left: 6px solid #2e7d32;
+}
+
+.photo {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.status {
+  background: #ffd740;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.date {
+  color: gray;
+  font-size: 0.9em;
+}

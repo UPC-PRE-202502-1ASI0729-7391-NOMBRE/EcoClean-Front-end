@@ -1,0 +1,41 @@
+{
+  "app": {
+    "brand": {
+      "name": "EcoSmart",
+      "subtitle": "Waste Solutions"
+    },
+    "nav": {
+      "trending": "Trending by district",
+      "map": "Map",
+      "messages": "Direct message",
+      "jobRequests": "Job request",
+      "logout": "Log out"
+    }
+  },
+  "iam": {
+    "signIn": {
+      "title": "Welcome!",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "button": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account"
+    },
+    "signUp": {
+      "title": "Create your account",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "button": "Sign up",
+      "haveAccount": "Already have an account?",
+      "goToLogin": "Sign in"
+    }
+  },
+  "recruitment": {
+    "jobRequest": {
+      "title": "Job request",
+      "subtitle": "Here you can apply to work for a municipality."
+    }
+  }
+}

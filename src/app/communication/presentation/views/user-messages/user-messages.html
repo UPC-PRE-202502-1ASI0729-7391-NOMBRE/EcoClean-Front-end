@@ -1,0 +1,56 @@
+<div class="page-header">
+  <h1>Mensaje directo a municipalidad</h1>
+  <p>Consulta tus conversaciones y comunícate con tu municipalidad en tiempo real.</p>
+</div>
+
+<div class="messages-page">
+
+  <div class="messages-header">
+    <button class="start-btn" (click)="startConversation()">
+      Iniciar conversación
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-box">
+    Cargando conversaciones...
+  </div>
+
+  <div *ngIf="!loading && conversations.length === 0" class="empty-box">
+    Todavía no has enviado mensajes a ninguna municipalidad.
+  </div>
+
+  <div class="conversation-list" *ngIf="!loading && conversations.length > 0">
+
+    <div class="conversation-card" *ngFor="let c of conversations">
+
+      <div class="left">
+        <!-- Avatar ahora será un círculo con inicial -->
+        <div class="avatar-circle">{{ c.municipalityName.charAt(0) }}</div>
+
+        <div class="info">
+          <div class="title-row">
+            <h3>{{ c.municipalityName }}</h3>
+            <span class="badge">{{ c.district }}</span>
+          </div>
+
+          <p class="message-preview">{{ c.lastMessage }}</p>
+          <p class="category">Conversación con municipalidad</p>
+        </div>
+      </div>
+
+      <div class="right">
+        <span class="date">{{ c.lastMessageDate | date:'medium' }}</span>
+        <button class="chat-btn" (click)="openChat(c)">● Chat</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<new-conversation-modal
+  *ngIf="showModal"
+  [municipalities]="municipalitiesConfig"
+  (send)="handleSendConversation($event)"
+  (close)="closeModal()">
+</new-conversation-modal>

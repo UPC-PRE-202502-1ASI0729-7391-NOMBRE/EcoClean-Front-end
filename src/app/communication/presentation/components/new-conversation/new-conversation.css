@@ -1,0 +1,107 @@
+/* Fondo difuminado */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 10;
+}
+
+/* Contenedor centrado */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+
+/* Card del modal */
+.modal-card {
+  background: white;
+  width: 460px;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-card h2 {
+  margin-top: 0;
+  color: #0a3d0a;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+/* Inputs */
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #c7c7c7;
+  font-size: 14px;
+  outline: none;
+  transition: .15s;
+}
+
+select:focus,
+textarea:focus {
+  border-color: #1a8d2f;
+  box-shadow: 0 0 0 3px rgba(26, 141, 47, 0.18);
+}
+
+/* Botones */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cancel,
+.send {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.cancel {
+  background: #d6d6d6;
+}
+
+.cancel:hover {
+  background: #c4c4c4;
+}
+
+.send {
+  background: #1a8d2f;
+  color: white;
+  font-weight: bold;
+}
+
+.send:hover {
+  background: #146c25;
+}

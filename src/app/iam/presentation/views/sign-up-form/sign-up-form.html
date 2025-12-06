@@ -1,0 +1,58 @@
+<div class="sign-up-bg">
+  <div class="sign-up-card">
+
+    <h2 class="logo-title">
+      Eco <br><span>Smart</span>
+      <small>WASTE SOLUTIONS</small>
+    </h2>
+
+    <h3 class="subtitle">Registra tu cuenta</h3>
+
+    <form (ngSubmit)="createAccount()" class="form-grid">
+
+      <div class="field">
+        <label>Nombre</label>
+        <input type="text" [(ngModel)]="firstName" name="firstName" />
+      </div>
+
+      <div class="field">
+        <label>Apellido</label>
+        <input type="text" [(ngModel)]="lastName" name="lastName" />
+      </div>
+
+      <div class="field full">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" [class.error-border]="errorMessage" />
+        <p class="error-text" *ngIf="errorMessage && !email">Campo obligatorio.</p>
+      </div>
+
+      <div class="field full">
+        <label>Distrito</label>
+        <select [(ngModel)]="district" name="district">
+          <option value="" disabled selected>Selecciona un distrito</option>
+          <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" [(ngModel)]="password" name="password" [class.error-border]="errorMessage" />
+        <p class="error-text" *ngIf="errorMessage && !password">Campo obligatorio.</p>
+      </div>
+
+      <div class="field">
+        <label>Confirmar contraseña</label>
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" />
+      </div>
+
+      <button class="btn" type="submit">Crear cuenta</button>
+
+    </form>
+
+    <p class="footer-text">
+      ¿Ya tienes una cuenta?
+      <a routerLink="/sign-in">Inicia sesión</a>
+    </p>
+
+  </div>
+</div>

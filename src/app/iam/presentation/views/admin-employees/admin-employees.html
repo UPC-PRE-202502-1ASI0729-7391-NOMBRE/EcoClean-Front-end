@@ -1,0 +1,11 @@
+<h1>Empleados Registrados</h1>
+
+<div *ngIf="loading" class="loading">Cargando...</div>
+
+<div *ngFor="let e of employees" class="card">
+  <h3>{{ e.username }}</h3>
+
+  <p><b>Email:</b> {{ e.email }}</p>
+
+  <button class="danger" (click)="fire(e.id)">Despedir</button>
+</div>

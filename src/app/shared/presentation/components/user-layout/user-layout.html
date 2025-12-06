@@ -1,0 +1,45 @@
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <!-- LOGO ÚNICO BIEN ORGANIZADO -->
+    <div class="logo">
+      <div class="logo-text">
+        <span>EcoSmart</span>
+        <small>Waste Solutions</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/user/tendencias" routerLinkActive="active">🔍 Tendencia por distrito</a>
+      <a routerLink="/user/mapa" routerLinkActive="active">📍 Mapa del distrito</a>
+      <a routerLink="/user/mensajes" routerLinkActive="active">💬 Mensaje directo</a>
+      <a routerLink="/user/empleo" routerLinkActive="active">🧑‍🔧 Solicitud de empleo</a>
+    </nav>
+
+    <!-- PERFIL → Debajo del menú pero antes del logout -->
+    <a routerLink="/user/perfil" routerLinkActive="active" class="profile-btn">
+      👤 Perfil
+    </a>
+
+    <button class="logout" (click)="logout()">
+      ⏻ Cerrar sesión
+    </button>
+
+    <div class="user-info-box">
+      <div class="user-avatar">
+        {{ username[0] | uppercase }}
+      </div>
+      <div class="user-data">
+        <span class="name">{{ username }}</span>
+        <span class="role">Ciudadano</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

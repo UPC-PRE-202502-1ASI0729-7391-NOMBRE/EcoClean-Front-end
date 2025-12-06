@@ -1,0 +1,44 @@
+<div class="container">
+
+  <h2 class="title">📄 Solicitudes de Empleo</h2>
+
+  <div *ngIf="loading" class="loading">Cargando solicitudes...</div>
+
+  <div class="cards" *ngIf="!loading">
+    <div class="card" *ngFor="let s of solicitudes">
+
+      <div class="header">
+        <div class="avatar">{{ s.name[0] | uppercase }}</div>
+
+        <div>
+          <h3>{{ s.name }}</h3>
+          <p class="email">{{ s.email }}</p>
+        </div>
+      </div>
+
+      <p class="municipality">
+        🏙 Distrito solicitado: <strong>{{ s.targetMunicipality }}</strong>
+      </p>
+
+      <p class="description">
+        {{ s.description }}
+      </p>
+
+      <span class="status" [ngClass]="s.status.toLowerCase()">
+        {{ s.status }}
+      </span>
+
+      <div class="actions">
+        <button class="approve" (click)="updateStatus(s.id, 'APPROVED')">
+          ✔ Aceptar
+        </button>
+
+        <button class="reject" (click)="updateStatus(s.id, 'REJECTED')">
+          ✖ Rechazar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

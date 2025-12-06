@@ -1,0 +1,159 @@
+.page-header {
+  background: #eaf7ec;
+  border-radius: 14px;
+  padding: 22px 30px;
+  margin: 20px 30px 15px 30px;
+  border-left: 5px solid #2e7d32;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.page-header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #4b4b4b;
+}
+
+
+.messages-page {
+  max-width: 1100px;     /* Más ancho */
+  margin: 0 30px 40px 30px; /* Menos margen izquierdo */
+  padding: 10px 10px 40px;
+}
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.messages-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #1c411f;
+}
+
+.messages-header p {
+  margin: 4px 0 0;
+  color: #5a6b5c;
+}
+
+.start-btn {
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #138a2e;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.start-btn:hover {
+  background: #0f7326;
+}
+
+.loading-box,
+.empty-box {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.conversation-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 24px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-row h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.badge {
+  background: #e3f7ea;
+  color: #138a2e;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.message-preview {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.category {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.date {
+  font-size: 11px;
+  color: #7f8a80;
+}
+
+.chat-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #138a2e;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chat-btn:hover {
+  background: #0f7326;
+}

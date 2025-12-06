@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "leaflet/dist/leaflet.css";
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+:root {
+  --green: #2E7D32;
+  --black: #000000;
+  --gray-dark: #424242;
+  --white: #ffffff;
+  --error: #d9534f;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #f4fbf4 !important; /* color general */
+}

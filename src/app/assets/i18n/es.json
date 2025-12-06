@@ -1,0 +1,41 @@
+{
+  "app": {
+    "brand": {
+      "name": "EcoSmart",
+      "subtitle": "Waste Solutions"
+    },
+    "nav": {
+      "trending": "Tendencia en cada distrito",
+      "map": "Mapa",
+      "messages": "Mensaje directo",
+      "jobRequests": "Solicitud de empleo",
+      "logout": "Cerrar sesión"
+    }
+  },
+  "iam": {
+    "signIn": {
+      "title": "¡Bienvenido!",
+      "emailLabel": "Email",
+      "passwordLabel": "Contraseña",
+      "button": "Entrar",
+      "noAccount": "¿No tienes una cuenta?",
+      "createAccount": "Crea una cuenta"
+    },
+    "signUp": {
+      "title": "Registra tu cuenta",
+      "username": "Nombre de usuario",
+      "email": "Email",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "button": "Crear cuenta",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "goToLogin": "Inicia sesión"
+    }
+  },
+  "recruitment": {
+    "jobRequest": {
+      "title": "Solicitud de empleo",
+      "subtitle": "Aquí podrás postular para trabajar en una municipalidad."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<h1>Empleados Activos</h1>
+
+<div *ngIf="loading" class="loading">Cargando empleados...</div>
+
+<div *ngIf="!loading && employees.length === 0" class="empty">
+  No hay empleados activos.
+</div>
+
+<div *ngFor="let e of employees" class="card">
+
+  <h3>Empleado: {{ e.name }}</h3>
+
+  <p><b>Correo:</b> {{ e.email }}</p>
+
+  <p><b>Distrito asignado:</b> {{ e.targetMunicipality }}</p>
+
+  <p><b>ID Usuario:</b> {{ e.applicantId }}</p>
+
+  <button class="fire" (click)="fire(e.applicantId)">
+    🔥 Despedir empleado
+  </button>
+
+</div>

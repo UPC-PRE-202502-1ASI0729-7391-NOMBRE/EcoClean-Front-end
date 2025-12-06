@@ -1,0 +1,123 @@
+<div class="trending-container">
+  <header class="trending-header">
+    <div>
+      <h1>Tendencia en cada distrito</h1>
+      <p>Explora las opiniones y reportes ciudadanos en tiempo real.</p>
+    </div>
+
+    <button class="btn-primary" (click)="toggleNewPostForm()">
+      Nueva publicación
+    </button>
+  </header>
+
+  <!-- Filtros -->
+  <section class="filters">
+    <div class="filter-group">
+      <label>Distrito</label>
+      <select [(ngModel)]="selectedDistrict" (change)="onDistrictChange()">
+        <option value="Todos los distritos">Todos los distritos</option>
+        <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Reacciones</label>
+      <select [(ngModel)]="reactionFilter" (change)="onReactionFilterChange()">
+        <option value="Todas">Todas</option>
+        <option value="Más populares">Más populares</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Formulario Nueva Publicación -->
+  <section class="new-post" *ngIf="showNewPostForm">
+    <h2>Nueva publicación</h2>
+
+    <div class="form-row">
+      <label>Distrito</label>
+      <select [(ngModel)]="newPostDistrict">
+        <option value="" disabled selected>Selecciona un distrito</option>
+        <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Contenido</label>
+      <textarea
+        [(ngModel)]="newPostContent"
+        rows="3"
+        placeholder="Escribe tu reporte o comentario..."
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>URL de imagen (opcional)</label>
+      <input
+        type="text"
+        [(ngModel)]="newPostImageUrl"
+        placeholder="https://..."
+      />
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary" (click)="toggleNewPostForm()">
+        Cancelar
+      </button>
+      <button class="btn-primary" (click)="createPost()">
+        Publicar
+      </button>
+    </div>
+  </section>
+
+  <!-- Lista de posts -->
+  <section class="posts-section">
+    <div *ngIf="loading" class="loading">Cargando publicaciones...</div>
+
+    <div class="posts-grid" *ngIf="!loading && posts.length > 0">
+      <article class="post-card" *ngFor="let post of posts">
+        <header class="post-header">
+          <div>
+            <h3>{{ post.authorName }}</h3>
+            <span class="badge-district">{{ post.district }}</span>
+          </div>
+          <span class="post-date">{{ formatDate(post.createdAt) }}</span>
+        </header>
+
+        <p class="post-content">
+          {{ post.content }}
+        </p>
+
+        <img
+          *ngIf="post.imageUrl"
+          [src]="post.imageUrl"
+          alt="Imagen de la publicación"
+          class="post-image"
+        />
+
+        <footer class="post-footer">
+          <div class="likes">
+            <button class="icon-button" (click)="like(post)">
+              ★
+            </button>
+            <span>{{ post.likes }} likes</span>
+            <span *ngIf="post.official" class="official-badge">
+              Anuncio oficial
+            </span>
+          </div>
+
+          <div class="actions">
+            <!-- Por ahora cualquiera puede eliminar;
+                 luego podemos restringirlo al autor con info del backend -->
+            <button class="link-button danger" (click)="delete(post)">
+              Eliminar
+            </button>
+          </div>
+        </footer>
+      </article>
+    </div>
+
+    <div *ngIf="!loading && posts.length === 0" class="empty-state">
+      Aún no hay publicaciones para estos filtros.
+    </div>
+  </section>
+</div>

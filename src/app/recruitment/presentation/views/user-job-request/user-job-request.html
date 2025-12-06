@@ -1,0 +1,70 @@
+<div class="page-header">
+  <h1>Solicitud de empleo</h1>
+  <p>Postula para apoyar la gestión de residuos en tu municipalidad.</p>
+</div>
+
+<div class="page">
+
+  <!-- ====================== FORMULARIO ====================== -->
+  <div class="card">
+    <h2 class="card-title">Enviar nueva solicitud</h2>
+    <p class="text-sm">Selecciona la municipalidad y cuéntanos tu motivación para unirte al equipo.</p>
+
+    <label class="form-label">Municipalidad</label>
+    <select [(ngModel)]="selectedMunicipality" class="input">
+      <option value="" disabled selected>Selecciona una opción</option>
+      <option *ngFor="let m of municipalities" [value]="m">{{ m }}</option>
+    </select>
+
+    <label class="form-label">¿Por qué deseas trabajar con nosotros?</label>
+    <textarea
+      [(ngModel)]="description"
+      class="textarea"
+      rows="4"
+      placeholder="Describe tu motivación..."
+    ></textarea>
+
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+    <button class="btn" (click)="submitApplication()">Enviar solicitud</button>
+  </div>
+
+  <!-- ====================== HISTORIAL ====================== -->
+  <div class="history-header">Historial de solicitudes</div>
+
+  <div class="history-list">
+    <div class="history-card" *ngFor="let app of applications">
+
+      <div class="avatar">
+        {{ app.municipality.charAt(0).toUpperCase() }}
+      </div>
+
+      <div class="info">
+        <h3>{{ app.municipality }}</h3>
+        <p class="text-sm">ID de solicitante: {{ app.applicantId }}</p>
+        <p class="description">📝 {{ app.description }}</p>
+      </div>
+
+      <div class="status"
+           [ngClass]="{
+          'pending': app.status === 'PENDING',
+          'approved': app.status === 'APPROVED',
+          'rejected': app.status === 'REJECTED'
+        }"
+      >
+        {{
+          app.status === 'PENDING' ? 'EN REVISIÓN' :
+            app.status === 'APPROVED' ? 'APROBADA' :
+              'RECHAZADA'
+        }}
+      </div>
+
+    </div>
+
+    <p *ngIf="applications.length === 0" class="empty">
+      Aún no has enviado solicitudes.
+    </p>
+
+  </div>
+
+</div>

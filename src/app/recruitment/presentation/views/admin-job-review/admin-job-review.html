@@ -1,0 +1,28 @@
+<h1>Solicitudes de Empleo</h1>
+
+<div *ngIf="loading" class="loading">Cargando...</div>
+
+<div *ngIf="!loading && applications.length === 0" class="empty">
+  No hay solicitudes por revisar.
+</div>
+
+<div class="app-card" *ngFor="let app of applications">
+
+  <h3>🏙 Distrito solicitado: <b>{{ app.municipality }}</b></h3>
+
+  <p><b>Postulante:</b> {{ app.applicantName }}</p>
+
+  <p class="description" *ngIf="app.description">
+    {{ app.description }}
+  </p>
+
+  <p class="status" [ngClass]="app.status">
+    Estado: {{ app.status }}
+  </p>
+
+  <div class="actions">
+    <button class="approve" (click)="updateStatus(app, 'APPROVED')">Aprobar</button>
+    <button class="reject" (click)="updateStatus(app, 'REJECTED')">Rechazar</button>
+  </div>
+
+</div>

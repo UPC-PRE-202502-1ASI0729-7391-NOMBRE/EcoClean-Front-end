@@ -1,0 +1,9 @@
+<h1>Tachos Inteligentes</h1>
+
+<div *ngIf="loading" class="loading">Cargando tachos...</div>
+
+<div *ngFor="let b of bins" class="card">
+  <h3>{{ b.name }} ({{ b.district }})</h3>
+  <p>Llenado: {{ b.fillLevel }}%</p>
+  <p>Estado: {{ b.status }}</p>
+</div>
